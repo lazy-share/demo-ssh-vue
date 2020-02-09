@@ -65,7 +65,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
 
         //判断token是否过期
-        if (TokenHolder.getSingle().isValidAndSet(token)) {
+        if (!TokenHolder.getSingle().isValidAndSet(token)) {
             throw new BusinessException(ResponseEnum.TOKEN_EXPIRE);
         }
 

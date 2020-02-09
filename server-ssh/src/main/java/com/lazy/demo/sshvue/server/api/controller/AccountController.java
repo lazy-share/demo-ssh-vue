@@ -53,7 +53,7 @@ public class AccountController {
         }
         TTokenEntity dbEntity = iTokenService.findByToken(token);
         if (dbEntity == null) {
-            return ResponseDto.paramError("token is not found");
+            return ResponseDto.success(null);
         }
         iTokenService.deleteById(dbEntity.getId());
 

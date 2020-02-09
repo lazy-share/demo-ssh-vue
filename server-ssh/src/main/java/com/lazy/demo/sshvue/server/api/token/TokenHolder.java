@@ -92,6 +92,7 @@ public class TokenHolder {
 
     public void updateTokenExpire(TTokenEntity tokenEntity) {
         tokenEntity.setLastUpdateTime(LocalDateTime.now());
+        iTokenService.saveOrUpdate(tokenEntity);
     }
 
     public long getExpireSecond() {

@@ -38,6 +38,7 @@ public class BusinessException extends RuntimeException {
     }
 
     public BusinessException(ResponseEnum resp) {
+        super(resp.getDesc());
         this.code = resp.getCode();
         this.msg = resp.getDesc();
     }

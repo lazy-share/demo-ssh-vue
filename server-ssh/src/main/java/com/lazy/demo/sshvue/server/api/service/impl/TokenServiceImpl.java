@@ -4,6 +4,8 @@ import com.lazy.demo.sshvue.server.api.dao.ITokenRepository;
 import com.lazy.demo.sshvue.server.api.entity.TTokenEntity;
 import com.lazy.demo.sshvue.server.api.service.ITokenService;
 import com.lazy.demo.sshvue.server.api.token.TokenHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,8 @@ import java.time.LocalDateTime;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class TokenServiceImpl implements ITokenService {
+
+    private Logger log = LoggerFactory.getLogger(TokenServiceImpl.class);
 
     @Autowired
     private ITokenRepository iTokenRepository;
@@ -48,7 +52,7 @@ public class TokenServiceImpl implements ITokenService {
     public void deleteByExpireToken() {
 
         LocalDateTime endTime = LocalDateTime.now().minusSeconds(TokenHolder.getSingle().getExpireSecond());
-
+        log.info("开始清理截止 [" + endTime.toString() + "] 过期的token");
         iTokenRepository.deleteExpireToken(endTime);
     }
 }
