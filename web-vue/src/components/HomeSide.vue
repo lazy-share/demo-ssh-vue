@@ -5,21 +5,21 @@
     text-color="#fff"
     router
     active-text-color="#ffd04b">
-    <app-menu-tree :menus="side_menus" v-if="side_menus && side_menus.length > 0"></app-menu-tree>
+    <menu-tree :menus="side_menus" v-if="side_menus && side_menus.length > 0"></menu-tree>
     <el-menu-item index="/" v-else>
       <i class="el-icon-menu"></i>
-      <span slot="title">报表统计</span>
+      <span slot="title">首页报表统计</span>
     </el-menu-item>
   </el-menu>
 </template>
 
 <script>
-  import appMenuTree from './MenuTree';
+  import MenuTree from './MenuTree';
 
   export default {
     name: "HomeSide",
     components: {
-      appMenuTree
+      MenuTree
     },
     data() {
       return {}
@@ -33,5 +33,9 @@
 </script>
 
 <style scoped>
-
+  el-menu-vertical-demo {
+    margin: 0px;
+    padding: 0px;
+    width: 200px;
+  }
 </style>

@@ -34,6 +34,11 @@ export default {
     return window.localStorage.getItem(key);
   },
 
+  'logout': function () {
+    this.localStorageSet(Constants.TOKEN_USER_KEY, '');
+    this.localStorageSet(Constants.TOKEN_KEY, '');
+  },
+
   "localStorageSet": function (key, value) {
     if (value instanceof Object || value instanceof Array) {
       value = this.toJsonStr(value);
@@ -48,11 +53,6 @@ export default {
       return login_info['token'];
     }
     return undefined;
-  },
-
-  "getNavMenus": function () {
-
-    return [{'id':'1','res_name':'ssh-vue-demo'}];
   },
 
   "timeHoursDiff": function (time) {
@@ -74,8 +74,8 @@ export default {
   "hasAdminUriPermi": function (uris, uri, method) {
     uris = JSON.parse(uris);
     method = method.toUpperCase();
-    for (let ix in uris){
-      if (uris[ix]['uri'] === uri && uris[ix]['method'] === method){
+    for (let ix in uris) {
+      if (uris[ix]['uri'] === uri && uris[ix]['method'] === method) {
         return true;
       }
     }
@@ -85,8 +85,8 @@ export default {
 
   "hasFrontUriPermi": function (uris, uri) {
     uris = JSON.parse(uris);
-    for (let ix in uris){
-      if (uris[ix]['uri'] === uri){
+    for (let ix in uris) {
+      if (uris[ix]['uri'] === uri) {
         return true;
       }
     }

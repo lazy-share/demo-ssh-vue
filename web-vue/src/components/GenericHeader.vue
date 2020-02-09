@@ -25,16 +25,17 @@
     font-size: x-large;
     margin-bottom: 30px;
     margin-top: 0px;
+    margin-left: 5px;
     text-align: left;
     line-height: 60px;
     padding: 0px;
   }
 
   .nav-logo {
-    width: 155px;
+    width: 100px;
     display: inline-block;
     height: 50px;
     background: url("../assets/logo.png") center center;
-    background-size: 150px auto;
+    background-size: 130px auto;
   }
 </style>

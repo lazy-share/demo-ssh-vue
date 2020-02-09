@@ -1,6 +1,5 @@
 <template>
   <el-container>
-    <generic-header></generic-header>
     <el-header height="50">
       <el-form :inline="true" :model="exampleSearchForm" size="mini" class="demo-form-inline">
         <el-form-item label="名称">
@@ -14,7 +13,7 @@
         </el-form-item>
 
         <el-form-item label="启用状态">
-          <el-select v-model="exampleSearchForm.valid_status" placeholder="启用状态">
+          <el-select v-model="exampleSearchForm.validStatus" placeholder="启用状态">
             <el-option label="--请选择--" value=""></el-option>
             <el-option label="启用" value="Y"></el-option>
             <el-option label="停用" value="N"></el-option>
@@ -22,11 +21,10 @@
         </el-form-item>
         <el-form-item label="修改时间">
           <el-date-picker
-            v-model="exampleSearchForm._s_last_update_time"
-            type="date"
+            v-model="exampleSearchForm.lastUpdateTime"
+            type="datetime"
             :editable=false
-            format="yyyy 年 MM 月 dd 日"
-            value-format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd hh:mm:ss"
             size="mini"
             placeholder="开始时间">
           </el-date-picker>
@@ -34,10 +32,9 @@
         <el-form-item label="修改时间">
           <el-date-picker
             :editable=false
-            format="yyyy 年 MM 月 dd 日"
-            value-format="yyyy-MM-dd"
-            v-model="exampleSearchForm._e_last_update_time"
-            type="date"
+            v-model="exampleSearchForm.lastUpdateTime2"
+            value-format="yyyy-MM-dd hh:mm:ss"
+            type="datetime"
             size="mini"
             placeholder="结束时间">
           </el-date-picker>
@@ -62,10 +59,10 @@
         <el-table-column prop="name" align="left" label="名称" width="150"></el-table-column>
         <el-table-column prop="email" align="left" label="邮箱" width="150"></el-table-column>
         <el-table-column prop="age" align="left" sortable label="年龄" width="150"></el-table-column>
-        <el-table-column prop="valid_status" align="left" label="启用状态" width="150"
+        <el-table-column prop="validStatus" align="left" label="启用状态" width="150"
                          :formatter="formatterValidStatus"></el-table-column>
-        <el-table-column prop="create_time" align="left" :formatter="formatterDate" label="创建日期" width="150"></el-table-column>
-        <el-table-column prop="last_update_time" align="left" :formatter="formatterDate" sortable label="最后修改日期"></el-table-column>
+        <el-table-column prop="createTime" align="left" :formatter="formatterDate" label="创建日期" width="150"></el-table-column>
+        <el-table-column prop="lastUpdateTime" align="left" :formatter="formatterDate" sortable label="最后修改日期"></el-table-column>
         <el-table-column fixed="right" align="left" width="180px;" label="操作">
           <template slot-scope="scope">
             <el-button size="mini" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
@@ -87,7 +84,7 @@
             <el-input v-model.email="exampleEditForm.email"></el-input>
           </el-form-item>
           <el-form-item label="状态">
-            <el-select v-model="exampleEditForm.valid_status" placeholder="状态">
+            <el-select v-model="exampleEditForm.validStatus" placeholder="状态">
               <el-option label="启用" value="Y"></el-option>
               <el-option label="停用" value="N"></el-option>
             </el-select>
@@ -105,9 +102,9 @@
         <el-pagination
           @size-change="onChangePageSize"
           @current-change="onChangeCurrentPage"
-          :current-page.sync="exampleSearchForm.paging.current_page"
+          :current-page.sync="exampleSearchForm.paging.currentPage"
           :page-sizes="[5, 10, 20, 50]"
-          :page-size="exampleSearchForm.paging.page_size"
+          :page-size="exampleSearchForm.paging.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="totalNum">
         </el-pagination>
@@ -124,25 +121,24 @@
 
   export default {
     name: 'Home',
-    components: {
-      GenericHeader
-    },
+
     methods: {
       //查询
       onSearch() {
         let self = this;
         this.$axios({
-          method: 'get',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'post',
           url: Constant.ADMIN_EXAMPLES_URI,
-          params: {
-            params: this.exampleSearchForm
-          }
+          data: Utils.toJsonStr(self.exampleSearchForm)
         }).then(function (resp) {
           if (resp.code !== Constant.REQ_SUCCESS) {
             self.$alert(resp.msg, '系统提示');
           } else {
-            self.totalNum = resp.data.total;
-            self.exampleTableData = resp.data.rows;
+            self.totalNum = Number.parseInt(resp.data.count);
+            self.exampleTableData = resp.data.data;
           }
         }).catch(resp => {
           console.log(resp);
@@ -170,11 +166,7 @@
               deleteIds.push(this.multipleSelection[index].id);
             }
           }
-          this.$axios.delete(Constant.ADMIN_EXAMPLES_URI, {
-            params: {
-              ids: JSON.stringify(deleteIds)
-            }
-          }).then(function (resp) {
+          this.$axios.delete(Constant.ADMIN_EXAMPLES_URI + '/' + deleteIds.join(',')).then(function (resp) {
             if (resp.code === Constant.REQ_SUCCESS) {
               self.onSearch();
               self.$message({type: 'success', message: '删除成功!'});
@@ -209,35 +201,17 @@
         let self = this;
         this.$refs['exampleEditForm'].validate((valid) => {
           if (valid) {
-            if (this.exampleEditForm.id) {
-              this.$axios.post(Constant.ADMIN_EXAMPLES_URI, {
-                params: this.exampleEditForm
-              }).then(function (resp) {
+            this.$axios.put(Constant.ADMIN_EXAMPLES_URI, self.exampleEditForm).then(function (resp) {
 
-                if (resp.code === Constant.REQ_SUCCESS) {
-                  self.onSearch();
-                  self.$message({type: 'success', message: '修改成功!'});
-                } else {
-                  self.$message({type: 'info', message: resp.msg});
-                }
-              }).catch(resp => {
-                self.$message({type: 'error', message: '系统错误'});
-              });
-            } else {
-              this.$axios.put(Constant.ADMIN_EXAMPLES_URI, {
-                params: this.exampleEditForm
-              }).then(function (resp) {
-
-                if (resp.code === Constant.REQ_SUCCESS) {
-                  self.onSearch();
-                  self.$message({type: 'success', message: '添加成功!'});
-                } else {
-                  self.$message({type: 'info', message: resp.msg});
-                }
-              }).catch(resp => {
-                self.$message({type: 'error', message: '系统错误'});
-              })
-            }
+              if (resp.code === Constant.REQ_SUCCESS) {
+                self.onSearch();
+                self.$message({type: 'success', message: '操作成功!'});
+              } else {
+                self.$message({type: 'info', message: resp.msg});
+              }
+            }).catch(resp => {
+              self.$message({type: 'error', message: '系统错误'});
+            });
             this.dialogVisible = false;
           } else {
             this.$message({type: 'warning', message: '表单验证不通过'});
@@ -255,15 +229,15 @@
         this.exampleEditForm.name = row.name;
         this.exampleEditForm.age = row.age;
         this.exampleEditForm.email = row.email;
-        this.exampleEditForm.valid_status = row.valid_status;
+        this.exampleEditForm.validStatus = row.validStatus;
         this.dialogVisible = true;
       },
 
       /**
        * 触发修改页面条数事件
        */
-      onChangePageSize(page_size) {
-        this.exampleSearchForm.paging.page_size = page_size;
+      onChangePageSize(pageSize) {
+        this.exampleSearchForm.paging.pageSize = pageSize;
         this.onSearch();
       },
 
@@ -281,9 +255,9 @@
         this.exampleSearchForm.name = '';
         this.exampleSearchForm.age = '';
         this.exampleSearchForm.email = '';
-        this.exampleSearchForm.valid_status = '';
-        this.exampleSearchForm._s_last_update_time = '';
-        this.exampleSearchForm._e_last_update_time = '';
+        this.exampleSearchForm.validStatus = '';
+        this.exampleSearchForm.lastUpdateTime = '';
+        this.exampleSearchForm.lastUpdateTime2 = '';
       },
 
       /**
@@ -295,7 +269,7 @@
       },
 
       /**
-       * 格式化valid_status列
+       * 格式化validStatus列
        * @param row
        * @param column
        * @param cellValue
@@ -310,7 +284,7 @@
       },
 
       formatterDate(row, column, cellValue){
-        return Utils.formatDate(new Date(cellValue), 'yyyy-MM-dd')
+        return Utils.formatDate(new Date(cellValue), 'yyyy-MM-dd hh:mm:ss')
       },
 
 
@@ -325,7 +299,7 @@
 
     /**
      * Vue属性
-     * @returns {{exampleEditFormRule: {name: *[], age: *[], email: *[]}, dialogVisible: boolean, multipleSelection: Array, exampleSearchForm: {name: string, age: string, email: string, valid_status: string, _s_last_update_time: string, _e_last_update_time: string, paging: {page_size: number, current_page: number}}, exampleEditForm: {id: string, name: string, age: string, email: string, valid_status: string, last_update_time: string, create_time: string}, totalNum: number, exampleTableData: Array}}
+     * @returns {{exampleEditFormRule: {name: *[], age: *[], email: *[]}, dialogVisible: boolean, multipleSelection: Array, exampleSearchForm: {name: string, age: string, email: string, validStatus: string, lastUpdateTime: string, lastUpdateTime2: string, paging: {pageSize: number, currentPage: number}}, exampleEditForm: {id: string, name: string, age: string, email: string, validStatus: string, last_update_time: string, create_time: string}, totalNum: number, exampleTableData: Array}}
      */
     data() {
       let checkAddName = (rule, value, callback) => {
@@ -374,17 +348,12 @@
           name: '',
           age: '',
           email: '',
-          valid_status: '',
-          _s_last_update_time: '',
-          _e_last_update_time: '',
+          validStatus: '',
+          lastUpdateTime: '',
+          lastUpdateTime2: '',
           paging: {
-            page_size: 5,
-            current_page: 1
-          },
-          rule: {
-            name: 'like',
-            email: 'like',
-            age: '='
+            pageSize: 5,
+            currentPage: 1
           }
         },
         exampleEditForm: {
@@ -392,7 +361,7 @@
           name: '',
           age: '',
           email: '',
-          valid_status: 'Y',
+          validStatus: 'Y',
         },
         totalNum: 100,
         exampleTableData: [],
@@ -408,7 +377,7 @@
      * 初始化钩子函数
      */
     created: function () {
-      // this.onSearch();
+      this.onSearch();
     }
   }
 </script>

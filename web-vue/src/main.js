@@ -5,6 +5,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 // 导入axios插件（发起ajax http用的）
 import axios from 'axios'
+// 导入vuex插件
+import store from './vuex';
 import VueAxios from 'vue-axios'
 // 导入router插件（前端路由跳转url用的）
 import router from './router'
@@ -27,6 +29,7 @@ Vue.config.productionTip = false;
 axios.defaults.baseURL = process.env.ADMIN_DOMAIN;
 Vue.use(VueAxios, axios);
 Vue.prototype.$axios = axios;
+
 // 注入vuex插件
 Vue.use(Vuex);
 // 注入elementUi框架
@@ -35,5 +38,7 @@ Vue.use(ElementUI);
 /* eslint-disable no-new */
 new Vue({
   router,
+  store,
+  axios,
   render: h => h(App)
-}).$mount("#app")
+}).$mount("#app");

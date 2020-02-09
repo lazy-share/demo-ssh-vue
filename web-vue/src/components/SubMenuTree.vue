@@ -6,8 +6,9 @@
         <span>{{parentmenu.res_name}}</span>
       </template>
       <template v-for="(submenu, ix) in parentmenu.submenus">
+        <!--递归调用支持无限极菜单渲染-->
         <template v-if="submenu.submenus.length > 0">
-          <app-sub-menu-tree :parentmenu="submenu"></app-sub-menu-tree>
+          <sub-menu-tree :parentmenu="submenu"></sub-menu-tree>
         </template>
         <el-menu-item v-else :index="submenu.uri ? submenu.uri : submenu.id">
           <i :class="submenu.icon"></i>
@@ -19,13 +20,13 @@
 </template>
 
 <script>
-  import appSubMenuTree from './SubMenuTree';
+  import SubMenuTree from './SubMenuTree';
 
     export default {
       name: "SubMenuTree",
       props: ['parentmenu'],
       components: {
-        appSubMenuTree
+        SubMenuTree
       }
     }
 </script>
