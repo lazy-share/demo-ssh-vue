@@ -2,9 +2,10 @@
   <div id="login">
     <el-row :gutter="10">
       <div class="bg-color" id="bg-color">
-        <login-header></login-header>
+        <generic-header></generic-header>
+        <img width="150" height="150" src="../assets/logo.png">
         <div id="loginFormDiv">
-          <el-col :offset="8" :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+          <el-col :offset="8" :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
             <div class="main grid-content bg-purple">
               <el-form :model="loginForm" status-icon :rules="login" ref="loginForm" label-width="100px"
                        class="demo-ruleForm">
@@ -32,12 +33,12 @@
   import * as Constant from '../constant'
   import Utils from '../utils'
   import {Loading} from 'element-ui';
-  import LoginHeader from '../components/LoginHeader'
+  import GenericHeader from '../components/GenericHeader'
 
   export default {
     name: "Login",
     components: {
-      LoginHeader
+      GenericHeader
     },
     data() {
       let checkUsername = (rule, value, callback) => {
@@ -114,6 +115,6 @@
   }
 
   #loginFormDiv{
-
+    margin-top: 10px;
   }
 </style>

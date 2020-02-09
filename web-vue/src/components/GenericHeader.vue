@@ -14,7 +14,7 @@
 
 <script>
     export default {
-        name: "LoginHeader"
+        name: "GenericHeader"
     }
 </script>
 

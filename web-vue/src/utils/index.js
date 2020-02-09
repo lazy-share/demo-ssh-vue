@@ -51,13 +51,8 @@ export default {
   },
 
   "getNavMenus": function () {
-    let loginInfo = this.localStorageGet(Constants.TOKEN_KEY);
-    if (!loginInfo){
-      return [];
-    }
-    loginInfo = JSON.parse(loginInfo);
-    let nav_menus = loginInfo['nav_menus'];
-    return nav_menus ? JSON.parse(nav_menus) : [];
+
+    return [{'id':'1','res_name':'ssh-vue-demo'}];
   },
 
   "timeHoursDiff": function (time) {
