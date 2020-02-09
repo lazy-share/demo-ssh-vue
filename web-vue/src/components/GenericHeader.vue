@@ -3,7 +3,7 @@
     <el-menu
       class="el-menu-demo"
       mode="horizontal"
-      background-color="#143f6d"
+      background-color="#23262E"
       text-color="#fff"
       active-text-color="#ffd04b">
       <el-menu-item index="1"><a class="nav-logo"></a></el-menu-item>
@@ -20,7 +20,7 @@
 
 <style scoped>
   .el-header {
-    background-color: #143f6d;
+    background-color: #23262E;
     color: #333;
     font-size: x-large;
     margin-bottom: 30px;
@@ -32,10 +32,10 @@
   }
 
   .nav-logo {
-    width: 100px;
+    width: 50px;
     display: inline-block;
     height: 50px;
     background: url("../assets/logo.png") center center;
-    background-size: 130px auto;
+    background-size: 50px auto;
   }
 </style>

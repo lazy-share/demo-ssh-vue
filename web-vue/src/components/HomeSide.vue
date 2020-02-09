@@ -1,10 +1,10 @@
 <template>
   <el-menu
     class="el-menu-vertical-demo"
-    background-color="#0D5477"
+    background-color="#383B4B"
     text-color="#fff"
     router
-    active-text-color="#ffd04b">
+    active-text-color="#B1BCDB">
     <menu-tree :menus="side_menus" v-if="side_menus && side_menus.length > 0"></menu-tree>
     <el-menu-item index="/" v-else>
       <i class="el-icon-menu"></i>
@@ -35,7 +35,8 @@
 <style scoped>
   el-menu-vertical-demo {
     margin: 0px;
-    padding: 0px;
+    padding-right: 10px;
     width: 200px;
+    background-color: #23262E;
   }
 </style>

@@ -56,13 +56,13 @@
         :default-sort="{prop: 'last_update_time', order: 'descending'}"
         border max-height="360" style="width: 100%">
         <el-table-column type="selection" width="40"></el-table-column>
-        <el-table-column prop="name" align="left" label="名称" width="150"></el-table-column>
-        <el-table-column prop="email" align="left" label="邮箱" width="150"></el-table-column>
-        <el-table-column prop="age" align="left" sortable label="年龄" width="150"></el-table-column>
-        <el-table-column prop="validStatus" align="left" label="启用状态" width="150"
+        <el-table-column prop="name" align="left" label="名称" width="200"></el-table-column>
+        <el-table-column prop="email" align="left" label="邮箱" width="200"></el-table-column>
+        <el-table-column prop="age" align="left" sortable label="年龄" width="200"></el-table-column>
+        <el-table-column prop="validStatus" align="left" label="启用状态" width="200"
                          :formatter="formatterValidStatus"></el-table-column>
-        <el-table-column prop="createTime" align="left" :formatter="formatterDate" label="创建日期" width="150"></el-table-column>
-        <el-table-column prop="lastUpdateTime" align="left" :formatter="formatterDate" sortable label="最后修改日期"></el-table-column>
+        <el-table-column prop="createTime" align="left" :formatter="formatterDate" label="创建日期" width="200"></el-table-column>
+        <el-table-column prop="lastUpdateTime" align="left" :formatter="formatterDate" width="200" sortable label="最后修改日期"></el-table-column>
         <el-table-column fixed="right" align="left" width="180px;" label="操作">
           <template slot-scope="scope">
             <el-button size="mini" @click="onEdit(scope.$index, scope.row)">编辑</el-button>
@@ -142,7 +142,7 @@
           }
         }).catch(resp => {
           console.log(resp);
-          self.$alert('请求出错', '系统提示');
+          self.$alert(resp.msg ? resp.msg : '请求出错', '系统提示');
         });
       },
 
@@ -387,7 +387,8 @@
     background-color: gainsboro;
     color: #333;
     padding: 0px;
-    padding-top: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
     text-align: left;
     line-height: 0px;
   }

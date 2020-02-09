@@ -89,7 +89,7 @@
             }).catch(resp => {
               console.log(resp);
               loadingInstance.close();
-              self.$alert('请求出错', '系统提示');
+              self.$alert(resp.msg ? resp.msg : '请求出错', '系统提示');
             });
           } else {
             self.$alert('请正确地输入账号和密码', '系统提示');

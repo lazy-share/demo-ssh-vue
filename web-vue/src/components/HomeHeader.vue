@@ -2,7 +2,7 @@
   <el-menu
     class="el-menu-demo"
     mode="horizontal"
-    background-color="#143f6d"
+    background-color="#23262E"
     @select="handleSelect"
     text-color="#D9D9D9"
     active-text-color="#fff">

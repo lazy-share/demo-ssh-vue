@@ -30,7 +30,7 @@
 <style scoped>
 
   .el-header {
-    background-color: #143f6d;
+    background-color: #23262E;
     color: #333;
     font-size: x-large;
     margin-bottom: 0px;
@@ -41,9 +41,10 @@
   }
 
   .el-aside {
-    background-color: #0D5477;
+    background-color: #23262E;
     color: #333;
     line-height: 200px;
+    padding: 0px;
     overflow-y:auto;
     width: 200px;
     height: calc(100vh - 80px);
