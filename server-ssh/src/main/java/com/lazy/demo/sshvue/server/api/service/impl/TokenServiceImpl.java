@@ -3,10 +3,13 @@ package com.lazy.demo.sshvue.server.api.service.impl;
 import com.lazy.demo.sshvue.server.api.dao.ITokenRepository;
 import com.lazy.demo.sshvue.server.api.entity.TTokenEntity;
 import com.lazy.demo.sshvue.server.api.service.ITokenService;
+import com.lazy.demo.sshvue.server.api.token.TokenHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -32,12 +35,20 @@ public class TokenServiceImpl implements ITokenService {
     }
 
     @Override
-    public TTokenEntity findByAccountId(Long accountId) {
-        return iTokenRepository.findByAccountId(accountId);
+    public TTokenEntity saveOrUpdate(TTokenEntity entity) {
+        return iTokenRepository.save(entity);
     }
 
     @Override
-    public TTokenEntity saveOrUpdate(TTokenEntity entity) {
-        return iTokenRepository.save(entity);
+    public void deleteById(Long id) {
+        iTokenRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteByExpireToken() {
+
+        LocalDateTime endTime = LocalDateTime.now().minusSeconds(TokenHolder.getSingle().getExpireSecond());
+
+        iTokenRepository.deleteExpireToken(endTime);
     }
 }

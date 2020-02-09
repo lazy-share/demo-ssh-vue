@@ -47,7 +47,7 @@ public class AccountController {
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @DeleteMapping("/sessions/{token}")
-    public ResponseDto deleteSession(@PathVariable("token")String token) {
+    public ResponseDto deleteSession(@PathVariable("token") String token) {
         if (AssertUtils.isEmpty(token)) {
             return ResponseDto.paramError("token is empty");
         }
@@ -55,10 +55,7 @@ public class AccountController {
         if (dbEntity == null) {
             return ResponseDto.paramError("token is not found");
         }
-        //将token置空
-        dbEntity.setToken(Constant.NONE);
-
-        iTokenService.saveOrUpdate(dbEntity);
+        iTokenService.deleteById(dbEntity.getId());
 
         return ResponseDto.success(null);
     }
@@ -90,19 +87,15 @@ public class AccountController {
             throw new BusinessException(ResponseEnum.PASSWORD_ERROR);
         }
 
+        //创建token
         String token = UuidUtils.getUuid();
-        TTokenEntity dbToken = iTokenService.findByAccountId(accountEntity.getId());
-        if (dbToken == null) {
-            dbToken = new TTokenEntity()
-                    .setId(iUniqueService.getPrimaryKey())
-                    .setAccountId(accountEntity.getId())
-                    .setValidStatus(Constant.Y)
-                    .setCreateTime(LocalDateTime.now())
-            ;
-        }
+        TTokenEntity dbToken = new TTokenEntity()
+                .setId(iUniqueService.getPrimaryKey())
+                .setAccountId(accountEntity.getId())
+                .setValidStatus(Constant.Y)
+                .setCreateTime(LocalDateTime.now());
         dbToken.setToken(token)
                 .setLastUpdateTime(LocalDateTime.now());
-
         iTokenService.saveOrUpdate(dbToken);
 
         TokenHolder.getSingle().set(new TokenAttr()
