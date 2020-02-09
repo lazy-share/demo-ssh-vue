@@ -41,7 +41,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new TokenInterceptor())
-                .excludePathPatterns("/accounts/**")
+                .excludePathPatterns("/sessions/**")
         ;
         super.addInterceptors(registry);
     }

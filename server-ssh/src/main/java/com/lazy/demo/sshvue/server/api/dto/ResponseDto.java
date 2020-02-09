@@ -1,5 +1,7 @@
 package com.lazy.demo.sshvue.server.api.dto;
 
+import com.lazy.demo.sshvue.server.api.enums.ResponseEnum;
+
 import java.io.Serializable;
 
 /**
@@ -21,15 +23,28 @@ public class ResponseDto implements Serializable {
     public ResponseDto() {
     }
 
+    public ResponseDto(ResponseEnum resp) {
+        this.code = resp.getCode();
+        this.msg = resp.getDesc();
+    }
+
     public ResponseDto(String code, String msg, Object data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
     }
 
-    public static ResponseDto success(Object data){
-        return new ResponseDto()
-                .setCode("200").setMsg("success").setData(data);
+
+    public static ResponseDto success(Object data) {
+        return new ResponseDto(ResponseEnum.SUCCESS).setData(data);
+    }
+
+    public static ResponseDto paramError(String msg) {
+        return new ResponseDto(ResponseEnum.PARAM_ERROR).setMsg(msg);
+    }
+
+    public static ResponseDto except() {
+        return new ResponseDto(ResponseEnum.SYSTEM_ERROR);
     }
 
 

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
@@ -31,68 +32,99 @@ public class TAccountEntity {
     @Column(name = "salt")
     private String salt;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "mobile")
+    private String mobile;
+
     @Column(name = "valid_status")
     private String validStatus;
 
     @Column(name = "create_time")
-    private LocalTime createTime;
+    private LocalDateTime createTime;
 
     @Column(name = "last_update_time")
-    private LocalTime lastUpdateTime;
+    private LocalDateTime lastUpdateTime;
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public TAccountEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public TAccountEntity setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public TAccountEntity setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public TAccountEntity setSalt(String salt) {
         this.salt = salt;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public TAccountEntity setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public TAccountEntity setMobile(String mobile) {
+        this.mobile = mobile;
+        return this;
     }
 
     public String getValidStatus() {
         return validStatus;
     }
 
-    public void setValidStatus(String validStatus) {
+    public TAccountEntity setValidStatus(String validStatus) {
         this.validStatus = validStatus;
+        return this;
     }
 
-    public LocalTime getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalTime createTime) {
+    public TAccountEntity setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
+        return this;
     }
 
-    public LocalTime getLastUpdateTime() {
+    public LocalDateTime getLastUpdateTime() {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(LocalTime lastUpdateTime) {
+    public TAccountEntity setLastUpdateTime(LocalDateTime lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+        return this;
     }
 }

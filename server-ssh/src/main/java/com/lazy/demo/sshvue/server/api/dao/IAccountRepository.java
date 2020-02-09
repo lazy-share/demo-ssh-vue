@@ -15,4 +15,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IAccountRepository extends JpaRepository<TAccountEntity, Long> {
 
+    TAccountEntity findByUsername(String username);
+
 }
