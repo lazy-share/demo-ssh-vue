@@ -57,9 +57,7 @@ export default {
       if (res.code === Constant.TOKEN_EXPIRE) {
         Utils.localStorageSet(Constant.TOKEN_KEY, "");
         Utils.localStorageSet(Constant.TOKEN_USER_KEY, "");
-        axios.CancelToken.source().cancel(function (e) {
-          console.log('11');
-        });
+        axios.CancelToken.source().cancel();
         router.push("/login")
 
         //其它错误
