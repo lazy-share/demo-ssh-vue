@@ -17,9 +17,7 @@ import com.lazy.demo.sshvue.server.api.utils.UuidUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.SignatureException;
 import java.time.LocalDateTime;
@@ -48,8 +46,26 @@ public class AccountController {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
+    @DeleteMapping("/sessions/{token}")
+    public ResponseDto deleteSession(@PathVariable("token")String token) {
+        if (AssertUtils.isEmpty(token)) {
+            return ResponseDto.paramError("token is empty");
+        }
+        TTokenEntity dbEntity = iTokenService.findByToken(token);
+        if (dbEntity == null) {
+            return ResponseDto.paramError("token is not found");
+        }
+        //将token置空
+        dbEntity.setToken(Constant.NONE);
+
+        iTokenService.saveOrUpdate(dbEntity);
+
+        return ResponseDto.success(null);
+    }
+
+
     @PutMapping("/sessions")
-    public ResponseDto sessionsPut(@RequestBody TAccountEntity paramBody) {
+    public ResponseDto putSession(@RequestBody TAccountEntity paramBody) {
 
         String username = paramBody.getUsername();
         String password = paramBody.getPassword();

@@ -31,4 +31,5 @@ build/
 .vscode/
 
 ./logs
+../web-vue/*.log
 *.log

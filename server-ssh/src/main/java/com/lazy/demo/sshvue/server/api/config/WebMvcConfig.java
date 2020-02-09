@@ -58,6 +58,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                 new MappingJackson2HttpMessageConverter();
 
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.findAndRegisterModules();
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
         simpleModule.addSerializer(BigInteger.class, ToStringSerializer.instance);

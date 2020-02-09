@@ -7,7 +7,7 @@
     <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${LOG_PATH}/info.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/info-%d{yyyyMMdd}.log.%i</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/info-%d{yyyyMMdd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>500MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
