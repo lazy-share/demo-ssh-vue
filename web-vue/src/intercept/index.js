@@ -57,9 +57,10 @@ export default {
       if (res.code === Constant.TOKEN_EXPIRE) {
         Utils.localStorageSet(Constant.TOKEN_KEY, "");
         Utils.localStorageSet(Constant.TOKEN_USER_KEY, "");
-        // this.$alert(res.msg ? res.msg : '请求出错', '系统提示');
-        // axios.CancelToken.source().cancel();
-        this.$router.push("/login")
+        axios.CancelToken.source().cancel(function (e) {
+          console.log('11');
+        });
+        router.push("/login")
 
         //其它错误
       } else {

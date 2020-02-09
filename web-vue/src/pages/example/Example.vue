@@ -142,7 +142,7 @@
           }
         }).catch(resp => {
           console.log(resp);
-          self.$alert(resp.msg ? resp.msg : '请求出错', '系统提示');
+          self.$message(resp.msg ? resp.msg : '请求出错', '系统提示');
         });
       },
 

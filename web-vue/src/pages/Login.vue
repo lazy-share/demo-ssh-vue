@@ -78,7 +78,6 @@
             let loadingInstance = Loading.service({});
             self.$axios.put(Constant.ADMIN_LOGIN_URI, this.loginForm).then(function (resp) {
               loadingInstance.close();
-              console.log(resp);
               if (resp.code !== Constant.REQ_SUCCESS) {
                 self.$alert(resp.msg, '系统提示');
               } else {
@@ -87,7 +86,6 @@
                 self.$router.push("/")
               }
             }).catch(resp => {
-              console.log(resp);
               loadingInstance.close();
               self.$alert(resp.msg ? resp.msg : '请求出错', '系统提示');
             });
