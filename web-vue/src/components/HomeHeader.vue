@@ -96,22 +96,32 @@
         this.$store.dispatch('loadSideMenus', [
           {
             'id': '1',
-            'res_name': 'demo',
+            'res_name': 'demo66666',
             'uri': '',
             'title': 'demo',
+			'icon': 'el-icon-menu',
             'submenus': [
               {
                 'id': '2',
                 'res_name': 'example',
                 'uri': '/example',
                 'title': 'example',
+				'icon': 'el-icon-menu',
+                'submenus': [{
+                'id': '9',
+                'res_name': 'example',
+                'uri': '/example',
+                'title': 'example',
+				'icon': 'el-icon-menu',
                 'submenus': []
+              }]
               },
 			  {
                 'id': '2',
                 'res_name': 'example1',
                 'uri': '/example2',
                 'title': 'example1',
+				'icon': 'el-icon-menu',
                 'submenus': []
               }
             ]
@@ -121,12 +131,14 @@
             'res_name': 'demo2',
             'uri': '',
             'title': 'demo2',
+			'icon': 'el-icon-menu',
             'submenus': [
               {
                 'id': '2',
                 'res_name': 'example2',
                 'uri': '/example',
                 'title': 'example2',
+				'icon': 'el-icon-menu',
                 'submenus': []
               }
             ]
@@ -136,12 +148,14 @@
             'res_name': 'demo3',
             'uri': '',
             'title': 'demo3',
+			'icon': 'el-icon-menu',
             'submenus': [
               {
                 'id': '2',
                 'res_name': 'example3',
                 'uri': '/example',
                 'title': 'example3',
+				'icon': 'el-icon-menu',
                 'submenus': []
               }
             ]

@@ -1,15 +1,15 @@
 <template>
   <el-menu
     class="el-menu-vertical-demo"
-    background-color="#383B4B"
+    background-color="#23262E"
     text-color="#fff"
     router
-    active-text-color="#E6E6E6">
-    <menu-tree :menus="side_menus" v-if="side_menus && side_menus.length > 0"></menu-tree>
-    <el-menu-item index="/" v-else>
+    active-text-color="#fff">
+	<el-menu-item index="/">
       <i class="el-icon-menu"></i>
-      <span slot="title">首页报表统计</span>
+      <span class="side_title" slot="title">首页报表统计</span>
     </el-menu-item>
+    <menu-tree :menus="side_menus" v-if="side_menus && side_menus.length > 0"></menu-tree>
   </el-menu>
 </template>
 
@@ -33,10 +33,22 @@
 </script>
 
 <style scoped>
-  el-menu-vertical-demo {
-    margin: 0px;
-    padding-right: 10px;
-    width: 200px;
-    background-color: #23262E;
-  }
+
+</style>
+
+<style>
+   .el-submenu .el-submenu__title {
+        text-align: left;
+    }
+	
+	.el-menu-vertical-demo {
+	   width: 200px;
+	   text-align: left;
+	  
+	}
+	
+	.side_title {
+	   font-weight: bold;
+	}
+
 </style>

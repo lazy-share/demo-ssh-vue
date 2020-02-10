@@ -41,7 +41,7 @@
   }
 
   .el-aside {
-    background-color: #23262E;
+    background-color: #344058;
     color: #333;
     line-height: 200px;
     padding: 0px;
