@@ -106,6 +106,43 @@
                 'uri': '/example',
                 'title': 'example',
                 'submenus': []
+              },
+			  {
+                'id': '2',
+                'res_name': 'example1',
+                'uri': '/example2',
+                'title': 'example1',
+                'submenus': []
+              }
+            ]
+          },
+		  {
+            'id': '2',
+            'res_name': 'demo2',
+            'uri': '',
+            'title': 'demo2',
+            'submenus': [
+              {
+                'id': '2',
+                'res_name': 'example2',
+                'uri': '/example',
+                'title': 'example2',
+                'submenus': []
+              }
+            ]
+          },
+		  {
+            'id': '3',
+            'res_name': 'demo3',
+            'uri': '',
+            'title': 'demo3',
+            'submenus': [
+              {
+                'id': '2',
+                'res_name': 'example3',
+                'uri': '/example',
+                'title': 'example3',
+                'submenus': []
               }
             ]
           }
@@ -121,12 +158,12 @@
     padding: 0px;
   }
   .nav-logo {
-    width: 100px;
+    width: 50px;
     display: inline-block;
     color: #fff;
     height: 50px;
     background: url("../assets/logo.png") center center;
-    background-size: 130px auto;
+    background-size: 50px auto;
   }
 </style>
 

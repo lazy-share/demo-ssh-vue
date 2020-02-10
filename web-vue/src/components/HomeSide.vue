@@ -4,7 +4,7 @@
     background-color="#383B4B"
     text-color="#fff"
     router
-    active-text-color="#B1BCDB">
+    active-text-color="#E6E6E6">
     <menu-tree :menus="side_menus" v-if="side_menus && side_menus.length > 0"></menu-tree>
     <el-menu-item index="/" v-else>
       <i class="el-icon-menu"></i>
