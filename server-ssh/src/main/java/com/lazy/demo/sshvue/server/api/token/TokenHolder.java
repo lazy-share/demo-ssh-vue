@@ -71,23 +71,26 @@ public class TokenHolder {
 
         boolean isValid = LocalDateTime.now().isBefore(tokenEntity.getLastUpdateTime().plusSeconds(this.getExpireSecond()));
 
-        if (isValid) {
-            //更新token有效时间
-            TokenHolder.getSingle().updateTokenExpire(tokenEntity);
-
-            //保存token信息
-            TAccountEntity accountEntity = iAccountService.findById(tokenEntity.getAccountId());
-            this.set(
-                    new TokenAttr()
-                            .setAccountId(tokenEntity.getAccountId())
-                            .setEmail(accountEntity.getEmail())
-                            .setPassword(accountEntity.getPassword())
-                            .setUsername(accountEntity.getUsername())
-                            .setSalt(accountEntity.getSalt())
-            );
+        if (!isValid){
+            //token过期，删除token
+            iTokenService.deleteById(tokenEntity.getId());
+            return false;
         }
 
-        return isValid;
+        //更新token有效时间
+        TokenHolder.getSingle().updateTokenExpire(tokenEntity);
+
+        //保存token信息
+        TAccountEntity accountEntity = iAccountService.findById(tokenEntity.getAccountId());
+        this.set(
+                new TokenAttr()
+                        .setAccountId(tokenEntity.getAccountId())
+                        .setEmail(accountEntity.getEmail())
+                        .setPassword(accountEntity.getPassword())
+                        .setUsername(accountEntity.getUsername())
+                        .setSalt(accountEntity.getSalt())
+        );
+        return true;
     }
 
     public void updateTokenExpire(TTokenEntity tokenEntity) {
