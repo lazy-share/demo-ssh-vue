@@ -6,7 +6,7 @@ import com.lazy.demo.sshvue.server.api.service.IAccountService;
 import com.lazy.demo.sshvue.server.api.service.ITokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  * @author laizhiyuan
  * @since 2020/2/8.
  */
-@Component
+@Configuration
 @ConfigurationProperties(prefix = "token")
 public class TokenHolder {
 
@@ -71,7 +71,7 @@ public class TokenHolder {
 
         boolean isValid = LocalDateTime.now().isBefore(tokenEntity.getLastUpdateTime().plusSeconds(this.getExpireSecond()));
 
-        if (!isValid){
+        if (!isValid) {
             //token过期，删除token
             iTokenService.deleteById(tokenEntity.getId());
             return false;
